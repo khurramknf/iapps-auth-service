@@ -1,6 +1,6 @@
-// services/auth-service/backend/src/config/config.validation.ts
+// File: services/auth-service/backend/src/config/config.validation.ts
 import { plainToClass } from 'class-transformer';
-import { IsEnum, IsNumber, IsString, validateSync } from 'class-validator';
+import { IsEnum, IsNumber, IsOptional, IsString, validateSync } from 'class-validator';
 
 enum Environment {
   Development = 'development',
@@ -39,41 +39,57 @@ class EnvironmentVariables {
   @IsString()
   JWT_REFRESH_EXPIRES_IN: string;
 
-  @IsString()
-  REDIS_HOST: string;
+  @IsOptional() @IsString()
+  REDIS_HOST?: string;
 
-  @IsNumber()
-  REDIS_PORT: number;
+  @IsOptional() @IsNumber()
+  REDIS_PORT?: number;
 
-  @IsString()
-  REDIS_PASSWORD: string;
+  @IsOptional() @IsString()
+  REDIS_PASSWORD?: string;
 
-  @IsString()
-  EMAIL_HOST: string;
+  @IsOptional() @IsString()
+  EMAIL_HOST?: string;
 
-  @IsNumber()
-  EMAIL_PORT: number;
+  @IsOptional() @IsNumber()
+  EMAIL_PORT?: number;
 
-  @IsString()
-  EMAIL_USER: string;
+  @IsOptional() @IsString()
+  EMAIL_USER?: string;
 
-  @IsString()
-  EMAIL_PASS: string;
+  @IsOptional() @IsString()
+  EMAIL_PASS?: string;
 
-  @IsString()
-  EMAIL_FROM: string;
+  @IsOptional() @IsString()
+  EMAIL_FROM?: string;
 }
 
 export function validate(config: Record<string, unknown>) {
   const validatedConfig = plainToClass(EnvironmentVariables, config, {
     enableImplicitConversion: true,
   });
+
+  const isProd = validatedConfig.NODE_ENV === Environment.Production;
+
   const errors = validateSync(validatedConfig, {
-    skipMissingProperties: false,
+    skipMissingProperties: !isProd, // ✅ allow missing in dev/test
   });
 
   if (errors.length > 0) {
     throw new Error(errors.toString());
   }
+
+  // ✅ apply sensible dev defaults if missing
+  if (!isProd) {
+    validatedConfig.REDIS_HOST ??= 'localhost';
+    validatedConfig.REDIS_PORT ??= 6379;
+    validatedConfig.REDIS_PASSWORD ??= '';
+    validatedConfig.EMAIL_HOST ??= 'smtp.example.com';
+    validatedConfig.EMAIL_PORT ??= 587;
+    validatedConfig.EMAIL_USER ??= 'test@example.com';
+    validatedConfig.EMAIL_PASS ??= 'changeme';
+    validatedConfig.EMAIL_FROM ??= 'iApps Live <noreply@example.com>';
+  }
+
   return validatedConfig;
-} 
+}

@@ -1,0 +1,54 @@
+.
+|-- README.md
+|-- auth-structure.txt
+|-- eslint.config.mjs
+|-- jest-e2e.json
+|-- nest-cli.json
+|-- package-lock.json
+|-- package.json
+|-- src
+|   |-- app.controller.ts
+|   |-- app.module.ts
+|   |-- app.service.ts
+|   |-- auth
+|   |   |-- auth.controller.ts
+|   |   |-- auth.module.ts
+|   |   |-- auth.service.ts
+|   |   |-- decorators
+|   |   |   `-- roles.decorator.ts
+|   |   |-- dto
+|   |   |   |-- change-password.dto.ts
+|   |   |   |-- login.dto.ts
+|   |   |   |-- register.dto.ts
+|   |   |   `-- update-profile.dto.ts
+|   |   |-- guards
+|   |   |   |-- jwt-auth.guard.ts
+|   |   |   `-- roles.guard.ts
+|   |   |-- jwt
+|   |   |   |-- jwt.module.ts
+|   |   |   `-- jwt.strategy.ts
+|   |   |-- public.decorator.ts
+|   |   `-- utils
+|   |       |-- auth.ts
+|   |       `-- bcrypt.ts
+|   |-- config
+|   |   |-- config.module.ts
+|   |   |-- config.service.ts
+|   |   `-- config.validation.ts
+|   |-- main.ts
+|   |-- organizations
+|   |   `-- entities
+|   |       `-- organization.entity.ts
+|   `-- users
+|       |-- user.entity.ts
+|       `-- users.controller.ts
+|-- test
+|   |-- app.e2e-spec.ts
+|   |-- auth.e2e-spec.ts
+|   |-- jest-e2e.json
+|   |-- seed.ts
+|   `-- setup.ts
+|-- tsconfig.build.json
+`-- tsconfig.json
+
+12 directories, 39 files

@@ -2,7 +2,7 @@
 import { Controller, Get, Param, NotFoundException } from '@nestjs/common';
 import { User } from './user.entity';
 import { Public } from 'src/auth/public.decorator';
-
+ 
 @Controller('users')
 export class UsersController {
   private users: User[] = [
