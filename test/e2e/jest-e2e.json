@@ -1,0 +1,10 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "testRegex": ".e2e-spec.ts$",
+  "rootDir": "../../",
+  "testEnvironment": "node",
+  "transform": { "^.+\\.(t|j)s$": ["@swc/jest"] },
+  "setupFilesAfterEnv": ["<rootDir>/backend/test/e2e/setup/jest.setup.js"],
+  "globalSetup": "<rootDir>/backend/test/e2e/setup/global-setup.js",
+  "globalTeardown": "<rootDir>/backend/test/e2e/setup/global-teardown.js"
+}
